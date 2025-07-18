@@ -5,7 +5,7 @@ const mouseContainer = document.querySelector(".mouse-trail");
 let currentImageIndex = 0;
 let lastX = 0;
 let lastY = 0;
-let distanceThreshold = 140; // 180
+let distanceThreshold = window.innerWidth < 991 ? 100 : 140;
 
 window.addEventListener("mousemove", (e) => {
   const dx = e.clientX - lastX;
