@@ -11,7 +11,7 @@ let distanceThreshold = window.innerWidth < 991 ? 100 : 140;
 const isMobile = window.innerWidth < 991;
 
 if (isMobile) {
-  // Mobile: tạo hình ảnh ngẫu nhiên rơi xuống
+  // Mobile: tạo hình ảnh ngẫu nhiên xuất hiện và biến mất
   function createRandomFallingImage() {
     const img = document.createElement("img");
     img.classList.add("image-trail");
@@ -20,36 +20,31 @@ if (isMobile) {
     currentImageIndex = (currentImageIndex + 1) % images.length;
 
     // Vị trí ngẫu nhiên trên màn hình
-    const randomX = Math.random() * (window.innerWidth - 80); // -80 để không bị cắt hình
-    const startY = -80; // Bắt đầu từ trên cùng
+    const randomX = Math.random() * (window.innerWidth - 100); // -80 để không bị cắt hình
+    const randomY = Math.random() * (window.innerHeight - 100); // -80 để không bị cắt hình
 
     gsap.set(img, {
       x: randomX,
-      y: startY,
+      y: randomY,
       scale: 0,
       opacity: 0,
       rotation: gsap.utils.random(-20, 20),
     });
 
-    // Hiện hình và rơi xuống
+    // Hiện hình
     gsap.to(img, {
       scale: 1,
       opacity: 1,
-      duration: 0.3,
+      duration: 0.5,
       ease: "power2.out",
     });
 
-    gsap.to(img, {
-      y: window.innerHeight + 80, // Rơi xuống dưới màn hình
-      duration: 2,
-      ease: "power2.in",
-    });
-
+    // Biến mất sau 1 khoảng thời gian
     gsap.to(img, {
       scale: 0.2,
       opacity: 0,
-      duration: 0.5,
-      delay: 1.5,
+      duration: 1,
+      delay: 0.8,
       ease: "power2.in",
       onComplete: () => {
         img.remove();
@@ -57,10 +52,10 @@ if (isMobile) {
     });
   }
 
-  // Tạo hình ảnh rơi mỗi 1-3 giây
   function startRandomImageFall() {
     createRandomFallingImage();
-    const nextDelay = Math.random() * 2000 + 1000; // 1-3 giây
+
+    const nextDelay = Math.random() * 1000 + 700;
     setTimeout(startRandomImageFall, nextDelay);
   }
 
